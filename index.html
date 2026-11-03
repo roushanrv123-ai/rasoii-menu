@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Rasoii - Menu</title>
+<style>
+:root{--bg:#0e0b09;--card:#1a1512;--line:#2e2620;--gold:#e0a63a;--text:#f3ece3;--muted:#a89c8d;--veg:#2e9e4f;--nv:#c6362c}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.4;padding-bottom:80px}
+header{text-align:center;padding:28px 16px 16px;background:radial-gradient(circle at 50% 0,#3a2410 0,var(--bg) 70%)}
+.logo{width:96px;height:96px;border-radius:50%;background:#f5a623;color:#1a1008;margin:0 auto 10px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:20px;border:3px solid #6b4310;line-height:1.1}
+h1{font-size:26px;letter-spacing:1px;color:var(--gold)}
+.tag{color:var(--muted);font-size:12px;letter-spacing:2px;text-transform:uppercase;margin-top:4px}
+.note{margin:14px auto 0;max-width:560px;font-size:13px;color:var(--muted);border:1px solid var(--line);border-radius:12px;padding:10px 14px;background:var(--card);text-align:left}
+.note b{color:var(--gold)}
+.note li{margin-left:18px;margin-top:3px}
+.sticky{position:sticky;top:0;z-index:10;background:var(--bg);border-bottom:1px solid var(--line);padding:10px 12px}
+#q{width:100%;padding:11px 14px;border-radius:24px;border:1px solid var(--line);background:var(--card);color:var(--text);font-size:15px;outline:none}
+#q:focus{border-color:var(--gold)}
+.chips{display:flex;gap:8px;overflow-x:auto;margin-top:10px;padding-bottom:2px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;padding:7px 14px;border-radius:20px;border:1px solid var(--line);background:var(--card);color:var(--text);font-size:13px;text-decoration:none;white-space:nowrap}
+.chip:active{background:var(--gold);color:#000}
+.filters{display:flex;gap:8px;margin-top:10px}
+.f{flex:none;padding:6px 12px;border-radius:16px;border:1px solid var(--line);background:transparent;color:var(--muted);font-size:12px}
+.f.on{border-color:var(--gold);color:var(--gold)}
+main{max-width:640px;margin:0 auto;padding:0 14px}
+section{padding-top:22px;scroll-margin-top:120px}
+section h2{font-size:19px;color:var(--gold);padding-bottom:6px;border-bottom:1px solid var(--line);margin-bottom:4px}
+section .sub{font-size:12px;color:var(--muted);margin:6px 0 2px}
+.item{display:flex;gap:10px;padding:11px 0;border-bottom:1px dashed var(--line)}
+.dot{flex:none;width:14px;height:14px;border:1.5px solid;border-radius:3px;margin-top:3px;display:flex;align-items:center;justify-content:center}
+.dot::after{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.dot.v{color:var(--veg)}.dot.n{color:var(--nv)}
+.info{flex:1;min-width:0}
+.name{font-weight:600;font-size:15px}
+.desc{font-size:12.5px;color:var(--muted);margin-top:2px}
+.badge{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.5px;color:#000;background:var(--gold);border-radius:4px;padding:1px 5px;margin-left:6px;vertical-align:middle}
+.price{flex:none;font-weight:700;color:var(--gold);font-size:15px;text-align:right;white-space:nowrap}
+.price small{display:block;font-weight:400;color:var(--muted);font-size:11px}
+.empty{text-align:center;color:var(--muted);padding:40px 0;display:none}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:30px 16px}
+.wa{position:fixed;left:50%;transform:translateX(-50%);bottom:14px;background:#25d366;color:#04200d;font-weight:700;text-decoration:none;padding:12px 22px;border-radius:30px;box-shadow:0 4px 16px rgba(0,0,0,.5);font-size:15px;z-index:20;white-space:nowrap}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">The<br>RASOII</div>
+  <h1>The Rasoii</h1>
+  <div class="tag">Welcome to a world of authentic flavours</div>
+  <div class="note">
+    <b>Dine-In Menu</b> &middot; 5% GST included
+    <ul>
+      <li>Give your name &amp; contact number to earn 10% reward points for your next visit and join <b>Our Loyalty Club</b>.</li>
+      <li>Please tell us <b>the level of spice</b> you prefer.</li>
+    </ul>
+  </div>
+</header>
+
+<div class="sticky">
+  <input id="q" type="search" placeholder="Search dishes... (paneer, biryani, shake)">
+  <div class="chips" id="chips"></div>
+  <div class="filters">
+    <button class="f on" data-f="all">All</button>
+    <button class="f" data-f="v"><span style="color:var(--veg)">&#9679;</span> Veg</button>
+    <button class="f" data-f="n"><span style="color:var(--nv)">&#9679;</span> Non-Veg</button>
+  </div>
+</div>
+
+<main id="menu"></main>
+<div class="empty" id="empty">No dishes found.</div>
+
+<footer>
+  Above Karnataka Cafe, New Market Road, Katihar<br>
+  Call / WhatsApp: +91 76679 46304
+</footer>
+
+<a class="wa" href="https://wa.me/917667946304" target="_blank" rel="noopener">&#128222; Order / Enquire on WhatsApp</a>
+
+<script>
+/* ===== MENU DATA — rates yahin se badlo =====
+   Har item: [naam, rate, type, description, tag]
+   type: "v" = veg, "n" = non-veg
+   rate: number ya text jaise "230 / 240"; rate ke neeche chhota label dene ke liye rateLabel use karo */
+const MENU = [
+ {id:"snacks", title:"Thanda Garam - Beverages & Snacks", items:[
+  ["Nescafe Coffee",75,"v"],
+  ["Thanda Cold Drink",50,"v"],
+  ["Masala Cold Drink",70,"v"],
+  ["Black Coffee - Americano",80,"v"],
+  ["Crunchy French Fries",150,"v","Golden, crispy potato fries with classic seasoning. Perfect starter snack."],
+  ["Peri-Peri French Fries",170,"v","Crispy fries tossed in fiery peri peri seasoning."],
+  ["Onion Pakora",170,"v","Crispy onion fritters fried golden. Served hot with chutney."],
+  ["Paneer Pakora",200,"v","Soft paneer cubes dipped in spiced batter, deep-fried."],
+  ["Chicken Tenders",280,"n","Crispy golden chicken strips, cheesy filling. 6 pcs."]
+ ]},
+ {id:"soups", title:"Soups", items:[
+  ["Veg Manchow Soup",140,"v"],
+  ["Veg Hot & Sour Soup",140,"v"],
+  ["Chicken Manchow Soup",160,"n"],
+  ["Chicken Hot & Sour Soup",170,"n"],
+  ["Rasoii Special Veg Soup",160,"v"],
+  ["Rasoii Special Non-Veg Soup",180,"n"]
+ ]},
+ {id:"vegstart", title:"Veg Starters", sub:"Chinese", items:[
+  ["Veg Crispy - Chef's Special",210,"v"],
+  ["Crispy Chilli Potato",210,"v"],
+  ["Honey Chilli Potato",220,"v"],
+  ["Veg Manchurian","230 / 240","v","","Dry / Gravy"],
+  ["Crispy Chilli Baby Corn",250,"v"],
+  ["Mushroom Chilli","250 / 260","v","","Dry / Gravy"],
+  ["Chilli Paneer","270 / 290","v","","Dry / Gravy"],
+  ["Thread Paneer",290,"v"],
+  ["Mushroom Salt & Pepper",250,"v"],
+  ["Paneer Salt & Pepper",280,"v"],
+  ["__sub","Tandoor"],
+  ["Hara Bhara Kebab",260,"v","Subject to availability."],
+  ["Veg Seekh Kebab",260,"v"],
+  ["Paneer Tikka Chatpata",320,"v"],
+  ["Malai Paneer Tikka",350,"v"],
+  ["Dahi Ke Sholey",250,"v","Subject to availability."]
+ ]},
+ {id:"nvstart", title:"Non-Veg Starters", sub:"Chinese", items:[
+  ["Chilli Chicken","290 / 310","n","","Dry / Gravy"],
+  ["Drums Of Heaven",320,"n"],
+  ["Chicken Lollipop (Dry)",310,"n"],
+  ["Chicken 65","290 / 310","n","","Dry / Gravy"],
+  ["Chicken Manchurian (Dry)",300,"n"],
+  ["Chicken Manchurian (Gravy)",320,"n"],
+  ["__sub","Tandoor"],
+  ["Chicken Tikka Chatpata",380,"n"],
+  ["Murgh Afghani",500,"n"],
+  ["Chicken Malai Tikka",400,"n"],
+  ["Chicken Special Angara",390,"n"],
+  ["Tandoori Chicken - 2 Pcs",290,"n"],
+  ["Tandoori Chicken - 4 Pcs",530,"n"],
+  ["Stuffed Tangri Kebab - 2 Pcs",290,"n"],
+  ["Tangri Kebab - 4 Pcs",520,"n"],
+  ["Chicken Seekh Kebab",280,"n"]
+ ]},
+ {id:"noodles", title:"Rice & Noodles", items:[
+  ["Veg Hakka Noodles",220,"v"],
+  ["Veg Schezwan Noodles",240,"v"],
+  ["Veg Fried Rice",230,"v"],
+  ["Veg Schezwan Fried Rice",250,"v"],
+  ["Egg Hakka Noodles",240,"n"],
+  ["Egg Schezwan Noodles",260,"n"],
+  ["Egg Fried Rice",240,"n"],
+  ["Egg Schezwan Fried Rice",270,"n"],
+  ["Chicken Hakka Noodles",280,"n"],
+  ["Chicken Schezwan Noodles",300,"n"],
+  ["Chicken Fried Rice",290,"n"],
+  ["Chicken Schezwan Fried Rice",310,"n"]
+ ]},
+ {id:"mainveg", title:"Main Course - Veg", items:[
+  ["Aloo Jeera Dry",180,"v","Potato cubes tossed with roasted cumin and mild spices."],
+  ["Aloo Do Pyaaza",200,"v","Potatoes cooked with double onions and rich spices."],
+  ["Veg Jaipuri",270,"v","Rich, colourful mixed vegetable curry from the royal kitchens of Rajasthan."],
+  ["Veg Kofta",290,"v","Soft vegetable dumplings in a rich, flavourful gravy."],
+  ["Malai Kofta",340,"v","Cottage cheese and potato dumplings in creamy tomato-cashew gravy. Sweet taste."],
+  ["Mushroom Masala",290,"v","Juicy mushrooms in a flavourful gravy with aromatic spices."],
+  ["Matar Mushroom Masala",290,"v","Mushrooms and green peas in spiced onion-tomato gravy."],
+  ["Matar Paneer",270,"v"],
+  ["Paneer Butter Masala",310,"v","Soft paneer in creamy, buttery tomato gravy. Slightly sweet."],
+  ["Kadhai Paneer",310,"v","Paneer cubes and green peas in spiced onion-tomato gravy.","Chef's Special"],
+  ["Mushroom Do Pyaaza",290,"v","Tender mushrooms cooked with double onions."],
+  ["Paneer Do Pyaaza",320,"v","Soft paneer cubes cooked with double the onions."],
+  ["__sub","The Rasoii Chef's Specials"],
+  ["Mix-Veg - Rasoii Special",260,"v","Seasonal vegetables in spiced kadhai masala."],
+  ["Paneer Tikka Masala",340,"v","Smoky grilled paneer in rich spiced tomato-onion gravy. British-Indian fusion."],
+  ["Paneer Lababdaar",320,"v","Paneer cubes in rich, creamy tomato-onion gravy."],
+  ["Paneer Pasanda",350,"v","Stuffed paneer slices in cashew-based gravy. Mughlai special."],
+  ["Paneer Sultana",350,"v","Soft paneer balls in rich, mildly spiced creamy gravy. A must try."],
+  ["Paneer Pakeeja",340,"v","Royal Indo-Chinese paneer delicacy in a velvety gravy of spices and cream."]
+ ]},
+ {id:"mainnv", title:"Main Course - Non-Veg", items:[
+  ["Chicken Curry","260 / 440","n","Tender chicken in rich, spiced onion-tomato gravy. Spicy.","2 / 4 pcs"],
+  ["Chicken Masala","280 / 440","n","Juicy chicken in aromatic masala gravy. Mid spicy.","2 / 4 pcs"],
+  ["Kadhai Chicken","300 / 460","n","Chicken with bell peppers and onions in kadhai masala. Spicy.","2 / 4 pcs"],
+  ["Chicken Kebab Masala",480,"n","Char-grilled chicken kebabs in smoky North Indian masala. Mild spicy."],
+  ["\"The Rasoii\" Special Chicken",320,"n","Velvet-soft chicken in rich, aromatic cream gravy. 2 pcs. Mid spicy."],
+  ["Chicken Do Pyaaza",280,"n","Chicken cooked with onions and aromatic spices. 2 pcs. Spicy."],
+  ["Chicken Pakeeja",460,"n","Royal Indo-Chinese dish in velvety gravy of spices and cream. 6 pcs."],
+  ["Chicken Dehati",450,"n","Rustic spices and earthy flavours for an authentic homely taste. 4 pcs. Spicy."],
+  ["Chicken Reshmi Masala",430,"n","Velvety, creamy Mughlai masala. Boneless. Mild."],
+  ["Haandi Chicken",460,"n","Slow-cooked in a traditional handi with aromatic spices. 6 pcs. Mid spicy."],
+  ["Mutton Rogan Josh",520,"n","Kashmiri-style Wazwan gravy. 4 pcs. Spicy.","Chef's Special"],
+  ["Rara Mutton",530,"n","Mutton curry enriched with spiced minced meat, thick and deeply layered. 4 pcs. Spicy."],
+  ["__sub","The Rasoii Chef's Specials"],
+  ["Chicken Dum Murgh",470,"n","Awadhi-style, sealed and slow-cooked on dum. Rich and smoky."],
+  ["Chicken Changezi Special",460,"n","Creamy, spiced Mughlai gravy. Karol Bagh, Delhi special. Spicy."],
+  ["Chicken Butter Masala",460,"n","Creamy, buttery tomato gravy from Chandni Chowk. A bit sweet."],
+  ["Mutton Gharwali",520,"n","Slow-cooked homestyle mutton curry. Similar to Champaran taste. Spicy."],
+  ["Mutton Nihari Special",530,"n","Old Delhi classic, simmered overnight in aromatic gravy. Mid spicy."]
+ ]},
+ {id:"biryani", title:"Biryani - Kolkata Style", sub:"It's not just Biryani - it's comfort, tradition and celebration on a plate.", items:[
+  ["Veg Dum Biryani",240,"v","Fragrant basmati rice, spiced veggies and herbs slow-cooked on dum."],
+  ["Egg Dum Biryani",250,"n","Basmati layered with 2 spiced boiled eggs, caramelised onions and saffron."],
+  ["Chicken Dum Biryani",270,"n","Marinated chicken and fragrant basmati slow-cooked on dum."],
+  ["Mutton Dum Biryani",340,"n","High quality marinated mutton and basmati slow-cooked on dum."]
+ ]},
+ {id:"daal", title:"Daal", items:[
+  ["Punjabi Daal Fry",200,"v"],
+  ["Punjabi Daal Tadka",200,"v"],
+  ["Daal Makhani",240,"v"],
+  ["Daal Makhani Punjabi",260,"v","","Chef's Special"],
+  ["Daal Kohlapuri (Spicy)",230,"v"]
+ ]},
+ {id:"breads", title:"Breads", items:[
+  ["Tandoori Roti",30,"v"],
+  ["Butter Tandoori Roti",35,"v"],
+  ["Plain Naan",45,"v"],
+  ["Butter Naan",55,"v"],
+  ["Garlic Naan",70,"v"],
+  ["Laccha Paratha",50,"v"],
+  ["Aloo Stuffed Naan",90,"v"],
+  ["Masala Kulcha",95,"v","","Chef's Special"],
+  ["Paneer Kulcha",120,"v"],
+  ["Cheese Garlic Naan",125,"v"]
+ ]},
+ {id:"rice", title:"Rice", items:[
+  ["Steamed Rice",120,"v"],
+  ["Jeera Rice",170,"v"],
+  ["Veg Pulao",230,"v"],
+  ["Paneer Pulao",260,"v"],
+  ["Chicken Pulao Special",270,"n"]
+ ]},
+ {id:"sides", title:"Raita & Salad", items:[
+  ["Mix Raita",80,"v"],
+  ["Boondi Raita",90,"v"],
+  ["Onion Salad",60,"v"],
+  ["Green Salad",90,"v"],
+  ["Roasted Papad",35,"v"]
+ ]},
+ {id:"sweets", title:"Mithaaaai & Ice-Cream", items:[
+  ["Gulab Jamun (2 Pcs)",90,"v"],
+  ["Gulab Jamun with Ice-Cream",100,"v"],
+  ["__sub","Ice-Cream (2 scoops)"],
+  ["Vanilla Ice-Cream",90,"v"],
+  ["Chocolate Ice-Cream",100,"v"],
+  ["Strawberry Ice-Cream",100,"v"],
+  ["Kesar-Pista Ice-Cream",120,"v"],
+  ["Butterscotch Ice-Cream",120,"v"]
+ ]},
+ {id:"drinks", title:"Mocktails & Shakes", items:[
+  ["Virgin Mojito",120,"v"],
+  ["Blue Ocean",120,"v"],
+  ["Mint Mojito",120,"v"],
+  ["Lemonade",120,"v"],
+  ["__sub","Special Shakes"],
+  ["Oreo Shake",150,"v"],
+  ["Nutella Shake",150,"v"],
+  ["Kit-Kat Shake",150,"v"],
+  ["__sub","Classic Milkshakes"],
+  ["Cold Coffee",120,"v"],
+  ["Vanilla Shake",120,"v"],
+  ["Chocolate Shake",130,"v"],
+  ["Strawberry Shake",140,"v"],
+  ["Pineapple Shake",140,"v"],
+  ["Kesar-Pista Shake",140,"v"]
+ ]}
+];
+
+const menuEl=document.getElementById('menu'), chipsEl=document.getElementById('chips'), emptyEl=document.getElementById('empty');
+let filter='all', query='';
+
+function el(tag,cls,text){const e=document.createElement(tag);if(cls)e.className=cls;if(text!==undefined)e.textContent=text;return e}
+
+function render(){
+  menuEl.textContent=''; let total=0;
+  MENU.forEach(cat=>{
+    const sec=el('section'); sec.id=cat.id;
+    const h=el('h2',null,cat.title); sec.appendChild(h);
+    if(cat.sub) sec.appendChild(el('div','sub',cat.sub));
+    let shown=0, pendingSub=null;
+    cat.items.forEach(it=>{
+      if(it[0]==='__sub'){pendingSub=el('div','sub',it[1]);return}
+      const [name,price,type,desc,tag]=it;
+      if(filter!=='all'&&type!==filter) return;
+      if(query && !(name+' '+(desc||'')).toLowerCase().includes(query)) return;
+      if(pendingSub){sec.appendChild(pendingSub);pendingSub=null}
+      const row=el('div','item');
+      row.appendChild(el('span','dot '+type));
+      const info=el('div','info');
+      const n=el('div','name',name);
+      const isBadge = tag==="Chef's Special";
+      if(isBadge) n.appendChild(el('span','badge','CHEF\u2019S SPECIAL'));
+      info.appendChild(n);
+      if(desc) info.appendChild(el('div','desc',desc));
+      row.appendChild(info);
+      const p=el('div','price','\u20B9'+price);
+      if(tag && !isBadge) p.appendChild(el('small',null,tag));
+      row.appendChild(p);
+      sec.appendChild(row); shown++;
+    });
+    if(shown){menuEl.appendChild(sec); total+=shown}
+  });
+  emptyEl.style.display=total?'none':'block';
+}
+
+MENU.forEach(c=>{
+  const a=el('a','chip',c.title.split(' - ')[0].replace('Thanda Garam','Snacks & Drinks'));
+  a.href='#'+c.id; chipsEl.appendChild(a);
+});
+document.getElementById('q').addEventListener('input',e=>{query=e.target.value.trim().toLowerCase();render()});
+document.querySelectorAll('.f').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('.f').forEach(x=>x.classList.remove('on'));
+  b.classList.add('on'); filter=b.dataset.f; render();
+}));
+render();
+</script>
+</body>
+</html>
